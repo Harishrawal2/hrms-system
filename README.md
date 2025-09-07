@@ -2,7 +2,7 @@
 
 A comprehensive Human Resource Management System backend built with Node.js, Express, Prisma ORM, MongoDB, Redis, and TypeScript following repository pattern architecture.
 
-## 🏗️ System Architecture
+## System Architecture
 
 ### High-Level Design (HLD)
 
@@ -71,7 +71,7 @@ Client ← API Gateway ← Controller ← Service ← DAO ← Database
 - **Controller Pattern**: HTTP request/response handling with standardized error management
 - **Dependency Injection**: Loose coupling between components for better testability
 
-## 🚀 Features
+## Features
 
 ### Core Modules
 
