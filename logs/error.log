@@ -1,0 +1,34 @@
+{"code":"ECONNREFUSED","level":"error","message":"Redis connection failed:","service":"hrms-api","stack":"AggregateError: \n    at internalConnectMultiple (node:net:1114:18)\n    at afterConnectMultiple (node:net:1667:5)","timestamp":"2025-09-06T15:57:57.973Z"}
+{"code":"ECONNREFUSED","level":"error","message":"Redis connection failed:","service":"hrms-api","stack":"AggregateError: \n    at internalConnectMultiple (node:net:1114:18)\n    at afterConnectMultiple (node:net:1667:5)","timestamp":"2025-09-06T15:58:09.214Z"}
+{"code":"ECONNREFUSED","level":"error","message":"Redis connection failed:","service":"hrms-api","stack":"AggregateError: \n    at internalConnectMultiple (node:net:1114:18)\n    at afterConnectMultiple (node:net:1667:5)","timestamp":"2025-09-06T16:00:48.837Z"}
+{"code":"ECONNREFUSED","level":"error","message":"Redis connection failed:","service":"hrms-api","stack":"AggregateError: \n    at internalConnectMultiple (node:net:1114:18)\n    at afterConnectMultiple (node:net:1667:5)","timestamp":"2025-09-06T16:00:51.884Z"}
+{"level":"error","message":"Access token required - POST /api/v1/attendance/clock-in - ::1","service":"hrms-api","timestamp":"2025-09-06T17:08:15.289Z"}
+{"level":"error","message":"Validation Error: Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character - POST /api/v1/auth/register - ::1","service":"hrms-api","timestamp":"2025-09-06T17:08:53.590Z"}
+{"level":"error","message":"Validation Error: Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character - POST /api/v1/auth/register - ::1","service":"hrms-api","timestamp":"2025-09-06T17:09:18.410Z"}
+{"level":"error","message":"Validation Error: Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character - POST /api/v1/auth/register - ::1","service":"hrms-api","timestamp":"2025-09-06T17:09:44.891Z"}
+{"level":"error","message":"Route / not found - GET / - ::1","service":"hrms-api","timestamp":"2025-09-06T17:14:02.806Z"}
+{"level":"error","message":"Route /favicon.ico not found - GET /favicon.ico - ::1","service":"hrms-api","timestamp":"2025-09-06T17:14:02.918Z"}
+{"level":"error","message":"Route /verify-email?token=c51ea2bd55c4d64b9b6cb2c4a384e364c9357e648b41f82f25b320655d16ba53 not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:14:14.906Z"}
+{"level":"error","message":"Route /verify-email?token=c51ea2bd55c4d64b9b6cb2c4a384e364c9357e648b41f82f25b320655d16ba53 not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:15:18.548Z"}
+{"level":"error","message":"Route /favicon.ico not found - GET /favicon.ico - ::1","service":"hrms-api","timestamp":"2025-09-06T17:15:18.639Z"}
+{"level":"error","message":"Route /verify-email?token=49ff198132a6325b78102c010aa6d1d2d4b91ddc64bd6876c5a305f6c633ffcc not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:17:06.646Z"}
+{"level":"error","message":"Route /verify-email?token=49ff198132a6325b78102c010aa6d1d2d4b91ddc64bd6876c5a305f6c633ffcc not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:17:53.043Z"}
+{"level":"error","message":"Route /verify-email?token=49ff198132a6325b78102c010aa6d1d2d4b91ddc64bd6876c5a305f6c633ffcc not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:19:00.763Z"}
+{"level":"error","message":"Route /verify-email?token=49ff198132a6325b78102c010aa6d1d2d4b91ddc64bd6876c5a305f6c633ffcc not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:19:58.791Z"}
+{"level":"error","message":"Route /verify-email?token=49ff198132a6325b78102c010aa6d1d2d4b91ddc64bd6876c5a305f6c633ffcc not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:20:02.465Z"}
+{"level":"error","message":"Route /verify-email?token=49ff198132a6325b78102c010aa6d1d2d4b91ddc64bd6876c5a305f6c633ffcc not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:20:56.893Z"}
+{"level":"error","message":"Route /verify-email?token=49ff198132a6325b78102c010aa6d1d2d4b91ddc64bd6876c5a305f6c633ffcc not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:20:59.756Z"}
+{"level":"error","message":"Route /verify-email?token=49ff198132a6325b78102c010aa6d1d2d4b91ddc64bd6876c5a305f6c633ffcc not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:21:07.622Z"}
+{"level":"error","message":"Route /verify-email?token=49ff198132a6325b78102c010aa6d1d2d4b91ddc64bd6876c5a305f6c633ffcc not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:21:10.589Z"}
+{"level":"error","message":"Route /verify-email?token=49ff198132a6325b78102c010aa6d1d2d4b91ddc64bd6876c5a305f6c633ffcc not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:22:01.622Z"}
+{"level":"error","message":"Route /verify-email?token=d6233fdd76da6732de4026f9fa9260423aca7bcea3e5be78cc69a47a47643436 not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:22:55.456Z"}
+{"level":"error","message":"Route /verify-email?token=d6233fdd76da6732de4026f9fa9260423aca7bcea3e5be78cc69a47a47643436 not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:24:08.239Z"}
+{"level":"error","message":"Route /verify-email?token=d6233fdd76da6732de4026f9fa9260423aca7bcea3e5be78cc69a47a47643436 not found - GET /verify-email - ::1","service":"hrms-api","timestamp":"2025-09-06T17:24:14.537Z"}
+{"level":"error","message":"jwt malformed - POST /api/v1/auth/refresh-token - ::1","service":"hrms-api","timestamp":"2025-09-07T06:23:43.337Z"}
+{"level":"error","message":"Token has been revoked - GET /api/v1/auth/profile - ::1","service":"hrms-api","timestamp":"2025-09-07T06:25:18.637Z"}
+{"level":"error","message":"Token has been revoked - GET /api/v1/auth/profile - ::1","service":"hrms-api","timestamp":"2025-09-07T06:25:26.518Z"}
+{"level":"error","message":"Access token required - POST /api/v1/auth/logout - ::1","service":"hrms-api","timestamp":"2025-09-07T06:25:45.054Z"}
+{"level":"error","message":"Route / not found - GET / - ::1","service":"hrms-api","timestamp":"2025-09-07T07:10:23.568Z"}
+{"level":"error","message":"Route / not found - GET / - ::1","service":"hrms-api","timestamp":"2025-09-07T07:10:24.242Z"}
+{"level":"error","message":"Route /v1/users not found - GET /v1/users - ::1","service":"hrms-api","timestamp":"2025-09-07T07:10:42.356Z"}
+{"level":"error","message":"Route /v1/notifications not found - GET /v1/notifications - ::1","service":"hrms-api","timestamp":"2025-09-07T07:10:53.216Z"}

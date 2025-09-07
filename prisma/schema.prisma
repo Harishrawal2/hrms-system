@@ -1,0 +1,709 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                       String    @id @default(auto()) @map("_id") @db.ObjectId
+  email                    String    @unique
+  password                 String
+  role                     Role      @default(EMPLOYEE)
+  customRoleId             String?   @db.ObjectId
+  isActive                 Boolean   @default(true)
+  emailVerified            Boolean   @default(false)
+  emailVerificationToken   String?
+  emailVerificationExpires DateTime?
+  passwordResetToken       String?
+  passwordResetExpires     DateTime?
+  twoFactorSecret          String?
+  twoFactorEnabled         Boolean   @default(false)
+  twoFactorBackupCodes     String[]
+  lastLogin                DateTime?
+  refreshTokens            String[]
+  employeeId               String?   @unique
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+
+  // Relations
+  employee      Employee?
+  customRole    CustomRole?    @relation(fields: [customRoleId], references: [id])
+  sessions      UserSession[]
+  notifications Notification[]
+  auditLogs     AuditLog[]
+
+  @@map("users")
+}
+
+model CustomRole {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String   @unique
+  description String?
+  permissions String[] // Array of permission strings
+  isActive    Boolean  @default(true)
+  createdBy   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  users User[]
+
+  @@map("customroles")
+}
+
+model UserSession {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  token     String   @unique
+  device    String?
+  ipAddress String?
+  userAgent String?
+  isActive  Boolean  @default(true)
+  lastUsed  DateTime @default(now())
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("usersessions")
+}
+
+model Department {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String   @unique
+  description String?
+  headId      String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("departments")
+}
+
+model Designation {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String   @unique
+  description String?
+  level       Int      @default(1)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("designations")
+}
+
+model Document {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  employeeId String
+  type       DocumentType
+  name       String
+  fileName   String
+  filePath   String
+  fileSize   Int
+  mimeType   String
+  uploadedBy String
+  isVerified Boolean      @default(false)
+  verifiedBy String?
+  verifiedAt DateTime?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  @@map("documents")
+}
+
+model Policy {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  type          PolicyType
+  content       String
+  version       String     @default("1.0")
+  isActive      Boolean    @default(true)
+  effectiveDate DateTime
+  createdBy     String
+  approvedBy    String?
+  approvedAt    DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  @@map("policies")
+}
+
+model Notification {
+  id        String           @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String           @db.ObjectId
+  title     String
+  message   String
+  type      NotificationType
+  isRead    Boolean          @default(false)
+  readAt    DateTime?
+  data      Json? // Additional data for the notification
+  createdAt DateTime         @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("notifications")
+}
+
+model AuditLog {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @db.ObjectId
+  action     String
+  resource   String
+  resourceId String?
+  oldData    Json?
+  newData    Json?
+  ipAddress  String?
+  userAgent  String?
+  timestamp  DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("auditlogs")
+}
+
+model SystemSettings {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  key       String   @unique
+  value     Json
+  type      String // 'attendance', 'leave', 'payroll', 'general'
+  updatedBy String
+  updatedAt DateTime @updatedAt
+
+  @@map("systemsettings")
+}
+
+model TrainingCourse {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  duration    Int // in hours
+  instructor  String?
+  isActive    Boolean  @default(true)
+  createdBy   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  enrollments TrainingEnrollment[]
+
+  @@map("trainingcourses")
+}
+
+model TrainingEnrollment {
+  id         String           @id @default(auto()) @map("_id") @db.ObjectId
+  courseId   String           @db.ObjectId
+  employeeId String
+  status     EnrollmentStatus @default(ENROLLED)
+  progress   Int              @default(0)
+  startDate  DateTime         @default(now())
+  endDate    DateTime?
+  score      Float?
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  // Relations
+  course TrainingCourse @relation(fields: [courseId], references: [id])
+
+  @@unique([courseId, employeeId])
+  @@map("trainingenrollments")
+}
+
+model Shift {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  startTime String // "09:00"
+  endTime   String // "18:00"
+  breakTime Int      @default(60) // minutes
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  assignments ShiftAssignment[]
+
+  @@map("shifts")
+}
+
+model ShiftAssignment {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  employeeId String
+  shiftId    String    @db.ObjectId
+  startDate  DateTime
+  endDate    DateTime?
+  isActive   Boolean   @default(true)
+  assignedBy String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  // Relations
+  shift Shift @relation(fields: [shiftId], references: [id])
+
+  @@map("shiftassignments")
+}
+
+model Expense {
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  employeeId      String
+  category        ExpenseCategory
+  amount          Float
+  description     String
+  receiptUrl      String?
+  submittedDate   DateTime        @default(now())
+  status          ExpenseStatus   @default(PENDING)
+  approvedBy      String?
+  approvedDate    DateTime?
+  rejectionReason String?
+  reimbursedDate  DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("expenses")
+}
+
+model Employee {
+  id                String           @id @default(auto()) @map("_id") @db.ObjectId
+  employeeId        String           @unique
+  userId            String           @unique @db.ObjectId
+  personalInfo      PersonalInfo
+  professionalInfo  ProfessionalInfo
+  emergencyContact  EmergencyContact
+  bankDetails       BankDetails?
+  isActive          Boolean          @default(true)
+  terminationDate   DateTime?
+  terminationReason String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  // Relations
+  user             User          @relation(fields: [userId], references: [id])
+  attendances      Attendance[]
+  leaves           Leave[]
+  payrolls         Payroll[]
+  performances     Performance[]
+  managedEmployees Employee[]    @relation("ManagerEmployee")
+  manager          Employee?     @relation("ManagerEmployee", fields: [managerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  managerId        String?       @db.ObjectId
+
+  @@map("employees")
+}
+
+model Attendance {
+  id            String           @id @default(auto()) @map("_id") @db.ObjectId
+  employeeId    String
+  date          DateTime
+  clockIn       DateTime
+  clockOut      DateTime?
+  breakDuration Int              @default(0)
+  totalHours    Float            @default(0)
+  overtimeHours Float            @default(0)
+  status        AttendanceStatus @default(PRESENT)
+  location      Location?
+  notes         String?
+  approvedBy    String?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  // Relations
+  employee Employee @relation(fields: [employeeId], references: [employeeId])
+
+  @@unique([employeeId, date])
+  @@map("attendances")
+}
+
+model Leave {
+  id               String                @id @default(auto()) @map("_id") @db.ObjectId
+  employeeId       String
+  leaveType        LeaveType
+  startDate        DateTime
+  endDate          DateTime
+  totalDays        Float
+  reason           String
+  status           LeaveStatus           @default(PENDING)
+  appliedDate      DateTime              @default(now())
+  approvedBy       String?
+  approvedDate     DateTime?
+  rejectionReason  String?
+  documents        LeaveDocument[]
+  isHalfDay        Boolean               @default(false)
+  emergencyContact EmergencyContactInfo?
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+
+  // Relations
+  employee Employee @relation(fields: [employeeId], references: [employeeId])
+
+  @@map("leaves")
+}
+
+model Payroll {
+  id                String        @id @default(auto()) @map("_id") @db.ObjectId
+  employeeId        String
+  month             Int
+  year              Int
+  basicSalary       Float
+  allowances        Allowances
+  deductions        Deductions
+  overtime          Overtime
+  bonus             Float         @default(0)
+  incentives        Float         @default(0)
+  grossSalary       Float         @default(0)
+  netSalary         Float         @default(0)
+  workingDays       Int
+  actualWorkingDays Int
+  leaveDays         Float         @default(0)
+  status            PayrollStatus @default(DRAFT)
+  processedBy       String?
+  processedDate     DateTime?
+  paymentDate       DateTime?
+  paymentMethod     PaymentMethod @default(BANK_TRANSFER)
+  paymentReference  String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  // Relations
+  employee Employee @relation(fields: [employeeId], references: [employeeId])
+
+  @@unique([employeeId, month, year])
+  @@map("payrolls")
+}
+
+model JobPosting {
+  id                  String          @id @default(auto()) @map("_id") @db.ObjectId
+  title               String
+  department          String
+  location            String
+  employmentType      EmploymentType
+  experienceLevel     ExperienceLevel
+  description         String
+  requirements        String[]
+  responsibilities    String[]
+  skillsRequired      String[]
+  salaryRange         SalaryRange
+  benefits            String[]
+  applicationDeadline DateTime
+  isActive            Boolean         @default(true)
+  postedBy            String
+  applicantCount      Int             @default(0)
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  @@map("jobpostings")
+}
+
+model Performance {
+  id             String            @id @default(auto()) @map("_id") @db.ObjectId
+  employeeId     String
+  reviewPeriod   ReviewPeriod
+  goals          Goal[]
+  ratings        Ratings
+  feedback       Feedback
+  reviewedBy     String
+  reviewDate     DateTime          @default(now())
+  nextReviewDate DateTime
+  status         PerformanceStatus @default(DRAFT)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  // Relations
+  employee Employee @relation(fields: [employeeId], references: [employeeId])
+
+  @@map("performances")
+}
+
+// Embedded Types
+type PersonalInfo {
+  firstName      String
+  lastName       String
+  dateOfBirth    DateTime
+  gender         Gender
+  maritalStatus  MaritalStatus @default(SINGLE)
+  nationality    String        @default("Indian")
+  phone          String
+  alternatePhone String?
+  address        Address
+}
+
+type ProfessionalInfo {
+  designation     String
+  department      String
+  joiningDate     DateTime
+  employmentType  EmploymentType @default(PERMANENT)
+  workLocation    WorkLocation   @default(OFFICE)
+  probationPeriod Int?           @default(6)
+  noticePeriod    Int?           @default(30)
+}
+
+type EmergencyContact {
+  name     String
+  relation String
+  phone    String
+  email    String?
+}
+
+type BankDetails {
+  accountNumber     String?
+  bankName          String?
+  branchName        String?
+  ifscCode          String?
+  accountHolderName String?
+}
+
+type Address {
+  street     String
+  city       String
+  state      String
+  postalCode String
+  country    String @default("India")
+}
+
+type Location {
+  type        LocationType @default(OFFICE)
+  address     String?
+  coordinates Coordinates?
+}
+
+type Coordinates {
+  latitude  Float
+  longitude Float
+}
+
+type LeaveDocument {
+  name       String
+  url        String
+  uploadDate DateTime @default(now())
+}
+
+type EmergencyContactInfo {
+  name  String
+  phone String
+}
+
+type Allowances {
+  hra       Float @default(0)
+  transport Float @default(0)
+  medical   Float @default(0)
+  special   Float @default(0)
+  other     Float @default(0)
+}
+
+type Deductions {
+  pf              Float @default(0)
+  esic            Float @default(0)
+  tds             Float @default(0)
+  professionalTax Float @default(0)
+  loanDeduction   Float @default(0)
+  other           Float @default(0)
+}
+
+type Overtime {
+  hours  Float @default(0)
+  rate   Float @default(0)
+  amount Float @default(0)
+}
+
+type SalaryRange {
+  min      Float
+  max      Float
+  currency String @default("INR")
+}
+
+type ReviewPeriod {
+  startDate DateTime
+  endDate   DateTime
+}
+
+type Goal {
+  title       String
+  description String
+  targetDate  DateTime
+  priority    Priority   @default(MEDIUM)
+  status      GoalStatus @default(NOT_STARTED)
+  progress    Int        @default(0)
+  comments    String?
+}
+
+type Ratings {
+  technical     Float
+  communication Float
+  teamwork      Float
+  leadership    Float
+  punctuality   Float
+  overall       Float?
+}
+
+type Feedback {
+  selfAssessment   String?
+  managerFeedback  String?
+  peerFeedback     String[]
+  improvementAreas String[]
+  strengths        String[]
+}
+
+// Enums
+enum Role {
+  ADMIN
+  HR
+  MANAGER
+  EMPLOYEE
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum MaritalStatus {
+  SINGLE
+  MARRIED
+  DIVORCED
+  WIDOWED
+}
+
+enum EmploymentType {
+  PERMANENT
+  CONTRACT
+  INTERN
+  CONSULTANT
+}
+
+enum WorkLocation {
+  OFFICE
+  REMOTE
+  HYBRID
+}
+
+enum DocumentType {
+  ID_PROOF
+  ADDRESS_PROOF
+  EDUCATION
+  EXPERIENCE
+  OFFER_LETTER
+  CONTRACT
+  MEDICAL
+  OTHER
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  HALF_DAY
+  WORK_FROM_HOME
+  ON_LEAVE
+}
+
+enum LocationType {
+  OFFICE
+  REMOTE
+  CLIENT_SITE
+}
+
+enum LeaveType {
+  SICK
+  CASUAL
+  EARNED
+  MATERNITY
+  PATERNITY
+  BEREAVEMENT
+  COMPENSATORY
+  UNPAID
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum PayrollStatus {
+  DRAFT
+  PROCESSED
+  PAID
+  ON_HOLD
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER
+  CHEQUE
+  CASH
+}
+
+enum ExperienceLevel {
+  FRESHER
+  JUNIOR
+  MID
+  SENIOR
+  LEAD
+}
+
+enum PerformanceStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  COMPLETED
+}
+
+enum Priority {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum GoalStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  OVERDUE
+}
+
+// New Enums
+enum PolicyType {
+  LEAVE
+  ATTENDANCE
+  PAYROLL
+  CODE_OF_CONDUCT
+  SECURITY
+  OTHER
+}
+
+enum NotificationType {
+  LEAVE_APPLIED
+  LEAVE_APPROVED
+  LEAVE_REJECTED
+  PAYROLL_PROCESSED
+  ATTENDANCE_REMINDER
+  DOCUMENT_UPLOADED
+  TRAINING_ASSIGNED
+  SYSTEM_ALERT
+}
+
+enum EnrollmentStatus {
+  ENROLLED
+  IN_PROGRESS
+  COMPLETED
+  DROPPED
+}
+
+enum ExpenseCategory {
+  TRAVEL
+  FOOD
+  ACCOMMODATION
+  TRANSPORT
+  OFFICE_SUPPLIES
+  TRAINING
+  OTHER
+}
+
+enum ExpenseStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  REIMBURSED
+}
