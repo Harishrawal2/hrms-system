@@ -138,3 +138,9 @@
 {"level":"error","message":"Route /v1/notifications not found - GET /v1/notifications - ::1","service":"hrms-api","timestamp":"2025-09-07T07:10:53.216Z"}
 {"level":"info","message":"::1 - - [07/Sep/2025:07:10:53 +0000] \"GET /v1/notifications HTTP/1.1\" 404 1006 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36\"","service":"hrms-api","timestamp":"2025-09-07T07:10:53.218Z"}
 {"level":"info","message":"Shutting down gracefully...","service":"hrms-api","timestamp":"2025-09-07T07:26:25.771Z"}
+{"level":"info","message":"✅ Prisma connected successfully","service":"hrms-api","timestamp":"2025-09-07T07:48:55.331Z"}
+{"level":"info","message":"✅ Redis connected successfully","service":"hrms-api","timestamp":"2025-09-07T07:48:55.370Z"}
+{"level":"info","message":"🚀 HRMS Server running on port 3000 in development mode","service":"hrms-api","timestamp":"2025-09-07T07:48:55.373Z"}
+{"level":"info","message":"📚 API Documentation: http://localhost:3000/api-docs","service":"hrms-api","timestamp":"2025-09-07T07:48:55.374Z"}
+{"level":"info","message":"🔍 Prisma Studio: Run 'npm run db:studio' to open database browser","service":"hrms-api","timestamp":"2025-09-07T07:48:55.374Z"}
+{"level":"info","message":"Shutting down gracefully...","service":"hrms-api","timestamp":"2025-09-07T08:49:26.813Z"}
