@@ -106,14 +106,14 @@ Client ← API Gateway ← Controller ← Service ← DAO ← Database
 - **File upload** with type validation and security
 - **Pagination, filtering, and sorting** on all list endpoints
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Node.js (v18 or higher)
 - MongoDB (v5.0 or higher)
 - Redis (v6.0 or higher)
 - TypeScript
 
-## ⚡ Quick Start
+## Quick Start
 
 1. **Install Dependencies**
 
@@ -164,7 +164,7 @@ Client ← API Gateway ← Controller ← Service ← DAO ← Database
    npm start
    ```
 
-## 📚 API Documentation
+## API Documentation
 
 The system includes comprehensive Swagger/OpenAPI documentation accessible at:
 
@@ -179,7 +179,7 @@ The system includes comprehensive Swagger/OpenAPI documentation accessible at:
 - **Schema Validation**: Detailed request/response schemas
 - **Error Handling**: Comprehensive error response documentation
 
-## 🏗️ Architecture
+## Architecture
 
 ### Repository Pattern Structure
 
@@ -217,7 +217,7 @@ src/
 - **RecruitmentService**: Job posting and application management
 - **PerformanceService**: Performance review workflows
 
-## 🗄️ Database Schema
+## Database Schema
 
 ### Prisma Models
 
@@ -237,7 +237,7 @@ src/
 - **Optimized queries** with proper indexing
 - **Migration system** for schema changes
 
-## 🔐 API Authentication
+## API Authentication
 
 ### Default Credentials (after seeding)
 
@@ -252,7 +252,7 @@ src/
 2. Include `Authorization: Bearer <token>` in all protected routes
 3. Use `/api/v1/auth/refresh-token` to refresh expired tokens
 
-## 📚 API Endpoints
+## API Endpoints
 
 ### Authentication
 
@@ -370,7 +370,7 @@ src/
 - `PUT /api/v1/performance/reviews/:id` - Update performance review (Admin/HR/Manager)
 - `PATCH /api/v1/performance/reviews/:id/submit` - Submit performance review
 
-## 🔐 Custom Roles & Permissions System
+## Custom Roles & Permissions System
 
 The system now supports custom roles with granular permissions:
 
@@ -414,7 +414,7 @@ Admins can create custom roles with specific permissions:
 - **Documents**: `documents.upload`, `documents.read`, `documents.verify`
 - **Organization**: `departments.manage`, `designations.manage`
 
-## 🔒 Two-Factor Authentication (2FA)
+## Two-Factor Authentication (2FA)
 
 Enhanced security with TOTP-based 2FA:
 
@@ -422,7 +422,7 @@ Enhanced security with TOTP-based 2FA:
 2. **Verify 2FA**: `POST /api/v1/auth/2fa/verify` - Verify OTP token
 3. **Login with 2FA**: Include OTP token in login request when enabled
 
-## 🛠️ Development Commands
+## Development Commands
 
 ### Database Operations
 
@@ -462,7 +462,7 @@ npm test
 npm run lint
 ```
 
-## 🛡️ Security Features
+## Security Features
 
 - **Password hashing** with bcrypt (12 rounds)
 - **JWT tokens** with secure secrets and expiration
@@ -478,7 +478,7 @@ npm run lint
 - **Audit logging** for compliance
 - **File upload security** with type validation
 
-## 📊 Monitoring & Logging
+## Monitoring & Logging
 
 - **Winston logger** with file and console output
 - **Request logging** with Morgan
@@ -487,7 +487,7 @@ npm run lint
 - **Performance monitoring** ready
 - **Prisma query logging** in development
 
-## 🚀 Production Deployment
+## Production Deployment
 
 1. Set `NODE_ENV=production`
 2. Configure production MongoDB and Redis URLs
@@ -496,7 +496,7 @@ npm run lint
 5. Build the application: `npm run build`
 6. Start the server: `npm start`
 
-## 🔄 Database Migrations
+## Database Migrations
 
 Prisma provides a robust migration system:
 
@@ -511,7 +511,7 @@ npx prisma migrate deploy
 npx prisma migrate reset
 ```
 
-## 📖 Development Notes
+## Development Notes
 
 ### Repository Pattern Benefits
 
@@ -550,7 +550,7 @@ npx prisma migrate reset
 - `GET /api/v1/analytics/leaves` - Get leave analytics
 - `GET /api/v1/analytics/payroll` - Get payroll analytics
 
-## 🔍 API Query Parameters
+## API Query Parameters
 
 ### Pagination
 
@@ -590,7 +590,7 @@ GET /api/v1/departments?search=engineering
 GET /api/v1/notifications?type=LEAVE_APPLIED
 ```
 
-## 📧 Enhanced Email System
+## Enhanced Email System
 
 ### Automated Notifications
 
@@ -605,7 +605,7 @@ GET /api/v1/notifications?type=LEAVE_APPLIED
 
 All emails use responsive HTML templates with company branding and clear call-to-action buttons.
 
-## 📊 Advanced Analytics
+## Advanced Analytics
 
 ### Dashboard Statistics
 
@@ -621,7 +621,7 @@ All emails use responsive HTML templates with company branding and clear call-to
 - **Performance Trends**: Department-wise ratings, goal completion rates
 - **Turnover Analysis**: Attrition rates, exit patterns, retention metrics
 
-## 🔔 Real-time Notifications
+## Real-time Notifications
 
 ### Notification Types
 
@@ -639,7 +639,7 @@ All emails use responsive HTML templates with company branding and clear call-to
 - Notification history
 - Unread count badges
 
-## 📧 Email Features
+## Email Features
 
 ### Automated Email Notifications
 
@@ -658,7 +658,7 @@ All emails use responsive HTML templates with:
 - Security information and expiration times
 - Professional formatting
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -679,7 +679,7 @@ All configuration is handled through environment variables. Copy `.env.example` 
 - **MANAGER**: Team management, leave approvals, attendance viewing
 - **EMPLOYEE**: Self-service operations, leave applications
 
-## 🧪 Testing
+## Testing
 
 The system is designed with testability in mind:
 
@@ -694,7 +694,7 @@ npm run test:coverage
 npm run test:watch
 ```
 
-## 📈 Performance Optimization
+## Performance Optimization
 
 - **Database indexing** on frequently queried fields
 - **Redis caching** for session management
