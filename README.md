@@ -55,6 +55,7 @@ The HRMS system follows a **3-tier layered architecture** with **Repository Patt
 ### Low-Level Design (LLD)
 
 #### Request/Response Flow
+
 ```
 Request Flow:
 Client → API Gateway → Controller → Middleware → Service → DAO → Database
@@ -64,6 +65,7 @@ Client ← API Gateway ← Controller ← Service ← DAO ← Database
 ```
 
 #### Core Design Patterns
+
 - **Repository Pattern**: Clean separation between data access and business logic
 - **Service Layer Pattern**: Centralized business logic with validation and transformation
 - **Controller Pattern**: HTTP request/response handling with standardized error management
@@ -72,6 +74,7 @@ Client ← API Gateway ← Controller ← Service ← DAO ← Database
 ## 🚀 Features
 
 ### Core Modules
+
 - **Authentication & Authorization**: JWT-based auth with role-based access control
 - **Employee Management**: Complete employee lifecycle management with repository pattern
 - **Attendance Management**: Clock in/out, overtime tracking, location-based attendance
@@ -87,6 +90,7 @@ Client ← API Gateway ← Controller ← Service ← DAO ← Database
 - **Analytics Dashboard**: Comprehensive reporting and data visualization
 
 ### Technical Features
+
 - **Prisma ORM** for type-safe database operations
 - **Repository Pattern** for clean data access layer
 - **Service Layer** for business logic separation
@@ -112,42 +116,49 @@ Client ← API Gateway ← Controller ← Service ← DAO ← Database
 ## ⚡ Quick Start
 
 1. **Install Dependencies**
+
    ```bash
    npm install
    ```
 
 2. **Setup Environment Variables**
+
    ```bash
    cp .env.example .env
    # Edit .env with your database connections and secrets
    ```
 
 3. **Generate Prisma Client**
+
    ```bash
    npm run db:generate
    ```
 
 4. **Push Database Schema**
+
    ```bash
    npm run db:push
    ```
 
 5. **Seed Database** (Optional)
+
    ```bash
    npm run db:seed
    ```
 
 6. **Start Development Server**
+
    ```bash
    npm run dev
    ```
 
 7. **Access API Documentation**
+
    ```
    http://localhost:5000/api-docs
    ```
 
-7. **Build for Production**
+8. **Build for Production**
    ```bash
    npm run build
    npm start
@@ -156,10 +167,12 @@ Client ← API Gateway ← Controller ← Service ← DAO ← Database
 ## 📚 API Documentation
 
 The system includes comprehensive Swagger/OpenAPI documentation accessible at:
+
 - **Development**: http://localhost:5000/api-docs
 - **Production**: https://your-domain.com/api-docs
 
 ### Key Features:
+
 - **Interactive API Explorer**: Test APIs directly from the documentation
 - **Request/Response Examples**: Complete examples for all endpoints
 - **Authentication**: Built-in JWT token authentication
@@ -169,6 +182,7 @@ The system includes comprehensive Swagger/OpenAPI documentation accessible at:
 ## 🏗️ Architecture
 
 ### Repository Pattern Structure
+
 ```
 src/
 ├── config/          # Database and external service configurations
@@ -184,6 +198,7 @@ src/
 ### Key Components
 
 #### Data Access Layer (DAO)
+
 - **UserDAO**: User account operations
 - **EmployeeDAO**: Employee profile management
 - **AttendanceDAO**: Attendance record operations
@@ -193,6 +208,7 @@ src/
 - **PerformanceDAO**: Performance review operations
 
 #### Service Layer
+
 - **AuthService**: Authentication and authorization logic
 - **EmployeeService**: Employee management business logic
 - **AttendanceService**: Attendance tracking and calculations
@@ -204,6 +220,7 @@ src/
 ## 🗄️ Database Schema
 
 ### Prisma Models
+
 - **User**: Authentication and user accounts
 - **Employee**: Employee profiles and professional information
 - **Attendance**: Daily attendance records with clock in/out
@@ -213,6 +230,7 @@ src/
 - **Performance**: Performance reviews and goals
 
 ### Key Features
+
 - **Type-safe database operations** with Prisma
 - **Automatic relationship management**
 - **Built-in validation** at database level
@@ -222,12 +240,14 @@ src/
 ## 🔐 API Authentication
 
 ### Default Credentials (after seeding)
+
 - **Admin**: admin@company.com / admin123
 - **HR**: hr@company.com / hr123
 - **Manager**: manager@company.com / manager123
 - **Employee**: employee@company.com / employee123
 
 ### Authentication Flow
+
 1. POST `/api/v1/auth/login` - Get access and refresh tokens
 2. Include `Authorization: Bearer <token>` in all protected routes
 3. Use `/api/v1/auth/refresh-token` to refresh expired tokens
@@ -235,6 +255,7 @@ src/
 ## 📚 API Endpoints
 
 ### Authentication
+
 - `POST /api/v1/auth/register` - Register new user
 - `POST /api/v1/auth/login` - User login
 - `POST /api/v1/auth/logout` - User logout
@@ -251,12 +272,14 @@ src/
 - `GET /api/v1/auth/sessions` - Get active sessions
 
 ### User Management
+
 - `GET /api/v1/users` - List users with filtering and pagination
 - `GET /api/v1/users/stats` - Get user statistics
 - `PUT /api/v1/users/:id` - Update user (Admin only)
 - `DELETE /api/v1/users/:id` - Delete user (Admin only)
 
 ### Custom Roles & Permissions (Admin Only)
+
 - `POST /api/v1/roles` - Create custom role
 - `GET /api/v1/roles` - List custom roles
 - `GET /api/v1/roles/permissions` - Get available permissions
@@ -265,6 +288,7 @@ src/
 - `DELETE /api/v1/roles/:id` - Delete custom role
 
 ### Department Management
+
 - `POST /api/v1/departments` - Create department (Admin/HR)
 - `GET /api/v1/departments` - List departments
 - `GET /api/v1/departments/:id` - Get department details
@@ -272,6 +296,7 @@ src/
 - `DELETE /api/v1/departments/:id` - Delete department (Admin)
 
 ### Document Management
+
 - `POST /api/v1/documents/upload` - Upload document
 - `GET /api/v1/documents/:employeeId` - Get employee documents
 - `GET /api/v1/documents` - List all documents (Admin/HR)
@@ -279,6 +304,7 @@ src/
 - `DELETE /api/v1/documents/:id` - Delete document
 
 ### Notifications
+
 - `GET /api/v1/notifications` - Get user notifications
 - `GET /api/v1/notifications/unread-count` - Get unread count
 - `PATCH /api/v1/notifications/mark-all-read` - Mark all as read
@@ -286,9 +312,11 @@ src/
 - `DELETE /api/v1/notifications/:id` - Delete notification
 
 ### Audit Logs (Admin Only)
+
 - `GET /api/v1/audit/logs` - Get audit logs with filtering
 
 ### Employee Management
+
 - `POST /api/v1/employees` - Create employee (Admin/HR)
 - `GET /api/v1/employees` - List employees with filtering and pagination (Admin/HR/Manager)
 - `GET /api/v1/employees/departments` - Get all departments
@@ -299,6 +327,7 @@ src/
 - `GET /api/v1/employees/team` - Get team members (Manager)
 
 ### Attendance Management
+
 - `POST /api/v1/attendance/clock-in` - Clock in
 - `POST /api/v1/attendance/clock-out` - Clock out
 - `GET /api/v1/attendance` - Get attendance records with filtering and pagination (Admin/HR/Manager)
@@ -307,6 +336,7 @@ src/
 - `PUT /api/v1/attendance/:id` - Update attendance (Admin/HR)
 
 ### Leave Management
+
 - `POST /api/v1/leaves` - Apply for leave
 - `GET /api/v1/leaves` - Get leave applications with filtering and pagination
 - `PATCH /api/v1/leaves/:id/approve` - Approve/reject leave (Admin/HR/Manager)
@@ -314,6 +344,7 @@ src/
 - `GET /api/v1/leaves/:employeeId/balance` - Get leave balance
 
 ### Payroll Management
+
 - `POST /api/v1/payroll` - Process payroll (Admin/HR)
 - `GET /api/v1/payroll` - Get payroll records with filtering and pagination (Admin/HR/Manager)
 - `GET /api/v1/payroll/summary` - Get payroll summary (Admin/HR)
@@ -321,6 +352,7 @@ src/
 - `PATCH /api/v1/payroll/:id/status` - Update payroll status (Admin/HR)
 
 ### Recruitment Management
+
 - `POST /api/v1/recruitment/jobs` - Create job posting (Admin/HR)
 - `GET /api/v1/recruitment/jobs` - Get job postings
 - `GET /api/v1/recruitment/jobs/active` - Get active job postings
@@ -330,6 +362,7 @@ src/
 - `POST /api/v1/recruitment/jobs/:jobId/apply` - Apply for job
 
 ### Performance Management
+
 - `POST /api/v1/performance/reviews` - Create performance review (Admin/HR/Manager)
 - `GET /api/v1/performance/reviews` - Get performance reviews
 - `GET /api/v1/performance/reviews/summary` - Get performance summary (Admin/HR)
@@ -342,12 +375,14 @@ src/
 The system now supports custom roles with granular permissions:
 
 ### Default Roles
+
 - **ADMIN**: Full system access (all permissions)
 - **HR**: Employee, leave, payroll, recruitment management
 - **MANAGER**: Team management, leave approvals, attendance viewing
 - **EMPLOYEE**: Self-service operations
 
 ### Custom Roles
+
 Admins can create custom roles with specific permissions:
 
 ```json
@@ -356,7 +391,7 @@ Admins can create custom roles with specific permissions:
   "description": "Senior management with extended permissions",
   "permissions": [
     "employee.read",
-    "employee.update", 
+    "employee.update",
     "leave.approve",
     "payroll.read",
     "performance.manage",
@@ -366,6 +401,7 @@ Admins can create custom roles with specific permissions:
 ```
 
 ### Available Permissions
+
 - **User Management**: `user.create`, `user.read`, `user.update`, `user.delete`
 - **Employee Management**: `employee.create`, `employee.read`, `employee.update`, `employee.delete`
 - **Attendance**: `attendance.read`, `attendance.update`, `attendance.approve`
@@ -389,6 +425,7 @@ Enhanced security with TOTP-based 2FA:
 ## 🛠️ Development Commands
 
 ### Database Operations
+
 ```bash
 # Generate Prisma client
 npm run db:generate
@@ -407,6 +444,7 @@ npm run db:studio
 ```
 
 ### Development
+
 ```bash
 # Start development server with hot reload
 npm run dev
@@ -476,18 +514,21 @@ npx prisma migrate reset
 ## 📖 Development Notes
 
 ### Repository Pattern Benefits
+
 - **Separation of concerns**: Data access logic separated from business logic
 - **Testability**: Easy to mock data access for unit testing
 - **Maintainability**: Changes to data access don't affect business logic
 - **Flexibility**: Easy to switch between different data sources
 
 ### Service Layer Benefits
+
 - **Business logic centralization**: All business rules in one place
 - **Reusability**: Services can be used by multiple controllers
 - **Transaction management**: Complex operations with multiple data sources
 - **Validation**: Business rule validation before data persistence
 
 ### Prisma Advantages
+
 - **Type safety**: Generated types for all database operations
 - **Auto-completion**: IntelliSense support for queries
 - **Migration system**: Version-controlled schema changes
@@ -495,12 +536,14 @@ npx prisma migrate reset
 - **Relationship management**: Easy handling of complex relationships
 
 ### Clean Architecture Benefits
+
 - **Scalability**: Easy to add new features without affecting existing code
 - **Maintainability**: Clear separation of concerns makes code easier to maintain
 - **Testability**: Each layer can be tested independently
 - **Reusability**: Common patterns can be reused across different modules
 
 ### Analytics & Reports
+
 - `GET /api/v1/analytics/dashboard` - Get dashboard statistics
 - `GET /api/v1/analytics/employees` - Get employee analytics
 - `GET /api/v1/analytics/attendance` - Get attendance analytics
@@ -510,20 +553,26 @@ npx prisma migrate reset
 ## 🔍 API Query Parameters
 
 ### Pagination
+
 All list endpoints support pagination:
+
 ```
 GET /api/v1/employees?page=2&limit=20
 ```
 
 ### Sorting
+
 Sort by any field (prefix with `-` for descending):
+
 ```
 GET /api/v1/employees?sort=-createdAt,firstName
 GET /api/v1/attendance?sort=date,-clockIn
 ```
 
 ### Filtering
+
 Filter by various criteria:
+
 ```
 GET /api/v1/employees?department=Engineering&isActive=true
 GET /api/v1/leaves?status=PENDING&leaveType=SICK
@@ -531,7 +580,9 @@ GET /api/v1/attendance?startDate=2024-01-01&endDate=2024-01-31
 ```
 
 ### Search
+
 Search across multiple fields:
+
 ```
 GET /api/v1/employees?search=john
 GET /api/v1/users?search=admin&role=ADMIN
@@ -542,6 +593,7 @@ GET /api/v1/notifications?type=LEAVE_APPLIED
 ## 📧 Enhanced Email System
 
 ### Automated Notifications
+
 - **Registration**: Email verification with secure tokens
 - **Password Reset**: Secure reset flow with time-limited tokens
 - **Leave Management**: Application, approval, rejection notifications
@@ -550,11 +602,13 @@ GET /api/v1/notifications?type=LEAVE_APPLIED
 - **Training**: Course enrollment and completion alerts
 
 ### Email Templates
+
 All emails use responsive HTML templates with company branding and clear call-to-action buttons.
 
 ## 📊 Advanced Analytics
 
 ### Dashboard Statistics
+
 - Employee metrics (total, active, by department)
 - Attendance trends and patterns
 - Leave utilization and patterns
@@ -562,6 +616,7 @@ All emails use responsive HTML templates with company branding and clear call-to
 - Performance ratings distribution
 
 ### Detailed Reports
+
 - **Recruitment Analytics**: Application funnel, time-to-hire, source effectiveness
 - **Performance Trends**: Department-wise ratings, goal completion rates
 - **Turnover Analysis**: Attrition rates, exit patterns, retention metrics
@@ -569,6 +624,7 @@ All emails use responsive HTML templates with company branding and clear call-to
 ## 🔔 Real-time Notifications
 
 ### Notification Types
+
 - Leave applications and approvals
 - Payroll processing updates
 - Document upload confirmations
@@ -576,6 +632,7 @@ All emails use responsive HTML templates with company branding and clear call-to
 - System alerts and announcements
 
 ### Features
+
 - Real-time delivery
 - Read/unread status tracking
 - Bulk mark as read
@@ -585,6 +642,7 @@ All emails use responsive HTML templates with company branding and clear call-to
 ## 📧 Email Features
 
 ### Automated Email Notifications
+
 - **Welcome emails** for new employees with temporary credentials
 - **Email verification** for account security
 - **Password reset** with secure token-based flow
@@ -592,7 +650,9 @@ All emails use responsive HTML templates with company branding and clear call-to
 - **Payroll notifications** when salary is processed
 
 ### Email Templates
+
 All emails use responsive HTML templates with:
+
 - Company branding and styling
 - Clear call-to-action buttons
 - Security information and expiration times
@@ -601,6 +661,7 @@ All emails use responsive HTML templates with:
 ## 🔧 Configuration
 
 ### Environment Variables
+
 All configuration is handled through environment variables. Copy `.env.example` to `.env` and update the values:
 
 - **Database**: MongoDB connection string
@@ -612,6 +673,7 @@ All configuration is handled through environment variables. Copy `.env.example` 
 - **Company**: Company information for payslips
 
 ### Role Permissions
+
 - **ADMIN**: Full system access
 - **HR**: Employee, leave, payroll, recruitment management
 - **MANAGER**: Team management, leave approvals, attendance viewing
@@ -660,6 +722,4 @@ npm run test:watch
 5. Ensure all tests pass
 6. Submit a pull request
 
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project created for my learning purpose.
